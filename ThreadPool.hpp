@@ -2,6 +2,7 @@
 
 #include <condition_variable>
 #include <exception>
+#include <iostream>
 #include <future>
 #include <list>
 #include <memory>
@@ -9,8 +10,6 @@
 #include <optional>
 #include <queue>
 #include <tuple>
-
-#include <fmt/format.h>
 
 namespace ThreadPool {
     
@@ -133,8 +132,8 @@ private:
                     task.value()->run_me();
                 } catch(std::exception e) {
                     std::lock_guard<std::mutex> lock(m_mutex);
-                    fmt::print("Caught exception from ThreadPool task:\n"
-                               "exc.what() = {}\n", e.what());
+                    std::cerr << "Caught exception from ThreadPool task:\n"
+                        << "exc.what() = " <<  e.what() << '\n';
                 }
             }
         }
